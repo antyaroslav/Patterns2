@@ -9,8 +9,8 @@ import ru.netology.data.DataGenerator.UserInfo;
 
 import java.time.Duration;
 
-import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
@@ -33,7 +33,7 @@ public class AuthTest {
         $("[data-test-id='password'] input").setValue(user.getPassword());
         $("[data-test-id='action-login']").click();
 
-        $("h2").shouldHave(exactText("Личный кабинет"), Duration.ofSeconds(15));
+        $("h2").shouldHave(text("Личный кабинет"), Duration.ofSeconds(15));
     }
 
     @Test
@@ -44,8 +44,9 @@ public class AuthTest {
         $("[data-test-id='password'] input").setValue(user.getPassword());
         $("[data-test-id='action-login']").click();
 
-        $("[data-test-id='error-notification'].notification_visible")
-                .shouldHave(text("Ошибка! Пользователь заблокирован"), Duration.ofSeconds(15));
+        $("[data-test-id='error-notification']")
+                .shouldBe(visible, Duration.ofSeconds(15))
+                .shouldHave(text("Ошибка! Пользователь заблокирован"));
     }
 
     @Test
@@ -56,8 +57,9 @@ public class AuthTest {
         $("[data-test-id='password'] input").setValue(user.getPassword());
         $("[data-test-id='action-login']").click();
 
-        $("[data-test-id='error-notification'].notification_visible")
-                .shouldHave(text("Ошибка! Неверно указан логин или пароль"), Duration.ofSeconds(15));
+        $("[data-test-id='error-notification']")
+                .shouldBe(visible, Duration.ofSeconds(15))
+                .shouldHave(text("Ошибка! Неверно указан логин или пароль"));
     }
 
     @Test
@@ -68,7 +70,8 @@ public class AuthTest {
         $("[data-test-id='password'] input").setValue(user.getPassword());
         $("[data-test-id='action-login']").click();
 
-        $("[data-test-id='error-notification'].notification_visible")
-                .shouldHave(text("Ошибка! Неверно указан логин или пароль"), Duration.ofSeconds(15));
+        $("[data-test-id='error-notification']")
+                .shouldBe(visible, Duration.ofSeconds(15))
+                .shouldHave(text("Ошибка! Неверно указан логин или пароль"));
     }
 }
